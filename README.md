@@ -23,6 +23,7 @@ cp stacks/react-tailwind/CLAUDE.md /path/to/my-project/
 | `python-scripts` | Scripts & automation | Python 3.12+, Click, Rich, asyncio |
 | `payload-cms` | Headless CMS | Payload 3.0, TypeScript, MongoDB/Postgres |
 | `python-scraping` | Data pipeline API | FastAPI, OpenAI, PostgreSQL, WebSockets, Scraping |
+| `nestjs-backend` | Enterprise backend API | NestJS 10+, TypeORM, PostgreSQL, Passport JWT, Swagger |
 
 ## Structure
 
@@ -41,7 +42,8 @@ stacks/
 ├── python-fastapi/
 ├── python-scripts/
 ├── payload-cms/
-└── python-scraping/
+├── python-scraping/
+└── nestjs-backend/
 ```
 
 ## Agents
@@ -62,7 +64,7 @@ Each stack includes these agents:
 
 ### Stack-Specific
 - **component-builder** (react-tailwind) - UI components with Tailwind
-- **api-developer** (nextjs-fullstack) - API routes specialist
+- **api-developer** (nextjs-fullstack, nestjs-backend) - API routes specialist
 - **pipeline-developer** (python-scraping) - Data pipeline specialist
 
 ## Skills
@@ -77,6 +79,7 @@ Skills provide domain knowledge that Claude loads automatically:
 | python-scripts | cli |
 | payload-cms | payload |
 | python-scraping | web-scraping, openai-extraction, websockets, background-tasks |
+| nestjs-backend | nestjs, typeorm |
 
 ## Commands
 
@@ -112,6 +115,21 @@ Custom slash commands available in all stacks:
 
 "Optimize the database queries"
 → performance-optimizer identifies N+1 and suggests fixes
+```
+
+### NestJS Backend Project
+```
+"Add a users module with CRUD and role-based access"
+→ feature-developer creates entity, DTOs, service, controller, module
+
+"Design the REST API for the orders feature"
+→ api-developer creates endpoints with guards, validation, Swagger docs
+
+"Review the auth module for vulnerabilities"
+→ security-reviewer audits JWT config, guards, and OWASP compliance
+
+"Write tests for the orders service"
+→ test-writer creates Jest unit tests with mocked repos
 ```
 
 ## Customization

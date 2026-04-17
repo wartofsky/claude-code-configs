@@ -82,17 +82,19 @@ Most stacks include variants of:
 
 ## Skills by Stack
 
-| Stack | Skills |
+Each stack includes local custom skills plus curated external skills downloaded from `skills.sh`. See [`docs/skills-matrix.md`](docs/skills-matrix.md) for source links, rationale, and priority.
+
+| Stack | Core Skill Themes |
 |---|---|
-| `react-tailwind` | `react19`, `tailwind`, `tanstack-query` |
-| `react-vite-dashboard` | `react-vite-dashboard`, `tanstack-query`, `react-router-v7`, `okta-spa`, `tailwind-v4` |
-| `nextjs-fullstack` | `nextjs`, `prisma` |
-| `nextjs-cms-frontend` | `nextjs-cms-frontend`, `tailwind-v4`, `playwright-vitest` |
-| `payload-cms` | `payload` |
-| `python-fastapi` | `fastapi`, `sqlalchemy` plus local FastAPI helper skills when present |
-| `python-scraping` | `web-scraping`, `openai-extraction`, `background-tasks`, `websockets` |
-| `python-scripts` | `cli` |
-| `nestjs-backend` | `nestjs`, `typeorm` |
+| `react-tailwind` | React 19, Tailwind v4/design systems, TypeScript, composition, UI/a11y review |
+| `react-vite-dashboard` | React/Vite dashboards, TanStack Query, React Router v7, Okta/OIDC, Tailwind v4, Playwright, a11y |
+| `nextjs-fullstack` | Next.js, Prisma, React/Next best practices, TypeScript, Node backend patterns, Postgres, migrations, Playwright |
+| `nextjs-cms-frontend` | CMS-driven Next.js, React/Next best practices, block rendering, Tailwind v4, TypeScript, Playwright, a11y |
+| `payload-cms` | Payload CMS, TypeScript, Node backend patterns, Postgres, migrations, React/admin UI, Playwright |
+| `python-fastapi` | Official FastAPI, SQLAlchemy, uv, pytest, Postgres, migrations |
+| `python-scraping` | FastAPI, custom scraping/OpenAI extraction/task guidance, uv, pytest, Postgres, migrations |
+| `python-scripts` | CLI automation, uv, pytest |
+| `nestjs-backend` | NestJS, TypeORM, Node backend patterns, TypeScript, Postgres, migrations |
 
 ## Commands
 

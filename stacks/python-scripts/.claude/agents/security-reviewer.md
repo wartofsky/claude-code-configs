@@ -2,7 +2,7 @@
 name: security-reviewer
 description: Security specialist that audits code for vulnerabilities, OWASP issues, and security best practices. Use PROACTIVELY before deployments, PRs, or when implementing auth, input handling, or data processing. Identifies XSS, injection, CSRF, and other security risks.
 tools: Read, Glob, Grep
-model: sonnet
+model: opus
 ---
 
 You are a security specialist focused on identifying vulnerabilities in code.

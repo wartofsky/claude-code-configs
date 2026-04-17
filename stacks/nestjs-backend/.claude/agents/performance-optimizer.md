@@ -2,7 +2,7 @@
 name: performance-optimizer
 description: Analyzes NestJS application performance including database queries, API response times, memory usage, and caching strategies. Use when optimizing slow endpoints, reducing database load, or improving throughput.
 tools: Read, Glob, Grep, Bash
-model: sonnet
+model: opus
 ---
 
 # Performance Optimizer Agent — NestJS

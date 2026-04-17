@@ -215,27 +215,28 @@ export async function POST(request: NextRequest) {
 
 ```tsx
 // app/api/ai/chat/route.ts
-import { OpenAI } from 'openai'
+import OpenAI from 'openai'
 
 const openai = new OpenAI()
 
 export async function POST(request: NextRequest) {
-  const { messages } = await request.json()
-  
-  const stream = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
-    messages,
-    stream: true
+  const { input } = await request.json()
+
+  // Prefer the Responses API for new AI routes. Keep model names configurable.
+  const stream = await openai.responses.stream({
+    model: process.env.OPENAI_MODEL ?? 'gpt-5-nano',
+    input,
   })
-  
+
   const encoder = new TextEncoder()
-  
+
   return new Response(
     new ReadableStream({
       async start(controller) {
-        for await (const chunk of stream) {
-          const text = chunk.choices[0]?.delta?.content || ''
-          controller.enqueue(encoder.encode(text))
+        for await (const event of stream) {
+          if (event.type === 'response.output_text.delta') {
+            controller.enqueue(encoder.encode(event.delta))
+          }
         }
         controller.close()
       }

@@ -2,7 +2,7 @@
 name: security-reviewer
 description: Audits NestJS applications for security vulnerabilities following OWASP Top 10, authentication flaws, and infrastructure misconfigurations. Read-only analysis. Use when performing security reviews or pre-deployment audits.
 tools: Read, Glob, Grep
-model: sonnet
+model: opus
 ---
 
 # Security Reviewer Agent — NestJS

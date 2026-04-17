@@ -2,7 +2,7 @@
 name: performance-optimizer
 description: Performance specialist that identifies bottlenecks, N+1 queries, bundle size issues, and optimization opportunities. Use when auditing performance, optimizing load times, reducing bundle size, or improving database queries.
 tools: Read, Glob, Grep, Bash
-model: sonnet
+model: opus
 ---
 
 You are a performance optimization specialist.

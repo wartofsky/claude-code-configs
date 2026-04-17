@@ -1,172 +1,176 @@
 # Claude Code Configurations
 
-Modular configurations for Claude Code with specialized agents, skills, and commands for different tech stacks.
+Modular Claude Code configurations with specialized agents, skills, and commands for different tech stacks.
+
+These stacks are designed to be copied into application repos as a starting `.claude/` configuration. Project-level instructions should be written individually in each target project, not shared from this repo.
 
 ## Quick Start
 
 ```bash
-# Clone the repo
-git clone https://github.com/YOUR_USER/claude-code-configs.git
-
 # Copy a stack to your project
-cp -r stacks/react-tailwind/.claude /path/to/my-project/
-cp stacks/react-tailwind/CLAUDE.md /path/to/my-project/
+cp -r stacks/react-vite-dashboard/.claude /path/to/my-project/
 ```
+
+Then create or update the target project's own `CLAUDE.md` / `AGENTS.md` with project-specific conventions, scripts, environment variables, and architecture notes.
 
 ## Available Stacks
 
-| Stack | Description | Key Technologies |
-|-------|-------------|------------------|
-| `react-tailwind` | Modern React SPA | React 19, TypeScript, Tailwind CSS v4, Vitest |
-| `nextjs-fullstack` | Full-stack Next.js | Next.js 15, App Router, Server Actions, Prisma |
-| `python-fastapi` | REST API backend | FastAPI, SQLAlchemy 2.0, Pydantic v2, pytest |
-| `python-scripts` | Scripts & automation | Python 3.12+, Click, Rich, asyncio |
-| `payload-cms` | Headless CMS | Payload 3.0, TypeScript, MongoDB/Postgres |
-| `python-scraping` | Data pipeline API | FastAPI, OpenAI, PostgreSQL, WebSockets, Scraping |
-| `nestjs-backend` | Enterprise backend API | NestJS 10+, TypeORM, PostgreSQL, Passport JWT, Swagger |
+| Stack | Best For | Key Technologies |
+|---|---|---|
+| `react-tailwind` | General React UI/SPAs | React 19, TypeScript, Tailwind CSS v4, Vitest |
+| `react-vite-dashboard` | Authenticated admin/ops dashboards | React 19, Vite 7, Tailwind v4, TanStack Query v5, React Router v7, Okta/OIDC |
+| `nextjs-fullstack` | Product apps with app-owned DB/auth | Next.js App Router, React 19, Prisma, Auth.js, Vitest, Playwright |
+| `nextjs-cms-frontend` | Public CMS-driven websites | Next.js App Router, external Payload/CMS, Tailwind v4, i18n, SEO, cache tags, Playwright |
+| `payload-cms` | Production Payload CMS apps | Payload CMS 3, Next.js, PostgreSQL/MongoDB, Local API, S3/CDN, Lexical, migrations |
+| `python-fastapi` | General REST API backend | FastAPI, Pydantic v2, SQLAlchemy 2.x, Alembic, pytest |
+| `python-scraping` | AI scraping/data pipeline APIs | FastAPI, OpenAI structured extraction, scraping, SSRF safety, task managers, Salesforce, metrics |
+| `python-scripts` | Automation scripts and CLIs | Python 3.12+, Click/Typer, Rich, httpx, pydantic-settings |
+| `nestjs-backend` | Enterprise NestJS APIs | NestJS 11, TypeORM, PostgreSQL 16, Swagger, Jest, Docker, Okta/JWT patterns |
+
+## Stack Selection Guide
+
+| If your project is... | Use |
+|---|---|
+| A React/Vite dashboard with login, filters, polling, tables, and external API calls | `react-vite-dashboard` |
+| A simple/component-focused React + Tailwind frontend | `react-tailwind` |
+| A public marketing/content site fed by Payload or another CMS | `nextjs-cms-frontend` |
+| A full-stack Next.js app with app-owned database/auth/business logic | `nextjs-fullstack` |
+| A Payload admin/content backend | `payload-cms` |
+| A normal FastAPI CRUD/API service | `python-fastapi` |
+| A FastAPI service doing scraping, AI extraction, imports/exports, background jobs, or Salesforce sync | `python-scraping` |
+| A NestJS/PostgreSQL API | `nestjs-backend` |
 
 ## Structure
 
-Each stack is self-contained with everything you need:
+Each stack is self-contained:
 
-```
-stacks/
-├── react-tailwind/
-│   ├── .claude/
-│   │   ├── agents/           # All agents (stack + shared)
-│   │   ├── skills/           # Framework skills
-│   │   └── commands/         # Custom commands
-│   └── CLAUDE.md             # Project context
-│
-├── nextjs-fullstack/
-├── python-fastapi/
-├── python-scripts/
-├── payload-cms/
-├── python-scraping/
-└── nestjs-backend/
+```text
+stacks/<stack>/
+└── .claude/
+    ├── agents/                # Specialized sub-agents for the stack
+    ├── skills/                # Reusable framework/domain guidance
+    └── commands/              # Slash commands such as /review-changes
 ```
 
-## Agents
+## Agent Categories
 
-Each stack includes these agents:
+### Shared Agents
 
-### Core Agents
-- **feature-developer** - Implements features from specs
-- **code-reviewer** - Reviews code (read-only)
-- **test-writer** - Writes comprehensive tests
+Most stacks include variants of:
 
-### Shared Agents (included in all stacks)
-- **git-commit** - Writes semantic commits (Conventional Commits)
-- **docs-writer** - Technical documentation
-- **refactor-agent** - Code improvement without behavior changes
-- **security-reviewer** - Security audit (OWASP, vulnerabilities)
-- **performance-optimizer** - Performance analysis and optimization
+- `feature-developer` — implement complete features from specs.
+- `code-reviewer` — read-only review before commits/PRs.
+- `test-writer` — unit/integration/E2E tests.
+- `security-reviewer` — stack-specific security audit.
+- `performance-optimizer` — stack-specific performance analysis.
+- `refactor-agent` — behavior-preserving cleanup.
+- `docs-writer` — README, API, architecture, and runbook docs.
+- `git-commit` — Conventional Commit messages.
 
-### Stack-Specific
-- **component-builder** (react-tailwind) - UI components with Tailwind
-- **api-developer** (nextjs-fullstack, nestjs-backend) - API routes specialist
-- **pipeline-developer** (python-scraping) - Data pipeline specialist
+### Stack-Specific Highlights
 
-## Skills
+| Stack | Specialized Agents |
+|---|---|
+| `react-vite-dashboard` | `api-client-agent`, `tanstack-query-agent`, `react-router-agent`, `okta-auth-agent`, `dashboard-ux-agent`, `tailwind-reviewer`, `accessibility-reviewer` |
+| `nextjs-cms-frontend` | `cms-integration-agent`, `block-renderer-agent`, `i18n-seo-agent`, `api-developer`, `tailwind-reviewer`, `accessibility-reviewer` |
+| `payload-cms` | `content-modeler`, `access-control-reviewer`, `migration-types-agent`, `storage-cdn-agent`, `translation-agent`, `local-api-reviewer`, `api-developer` |
+| `python-scraping` | `scraper-dev`, `task-manager-dev`, `openai-extraction-agent`, `ssrf-security-reviewer`, `xlsx-import-export-agent`, `salesforce-agent`, `okta-auth-agent`, `ops-monitoring-agent` |
+| `nestjs-backend` | `config-validator`, `db-schema-designer`, `migration-runner`, `docker-setup`, `nestjs-auth-setup`, `nestjs-module-generator`, `crud-generator`, `api-developer` |
+| `python-fastapi` | `config-validator`, `migration-runner`, `openapi-contract-reviewer` |
+| `react-tailwind` | `component-builder`, `tailwind-reviewer`, `tanstack-query-agent`, `react-router-agent` |
+| `python-scripts` | `script-developer` |
 
-Skills provide domain knowledge that Claude loads automatically:
+## Skills by Stack
 
 | Stack | Skills |
-|-------|--------|
-| react-tailwind | react19, tailwind-v4, tanstack-query |
-| nextjs-fullstack | nextjs15, prisma |
-| python-fastapi | fastapi, sqlalchemy-async |
-| python-scripts | cli |
-| payload-cms | payload |
-| python-scraping | web-scraping, openai-extraction, websockets, background-tasks |
-| nestjs-backend | nestjs, typeorm |
+|---|---|
+| `react-tailwind` | `react19`, `tailwind`, `tanstack-query` |
+| `react-vite-dashboard` | `react-vite-dashboard`, `tanstack-query`, `react-router-v7`, `okta-spa`, `tailwind-v4` |
+| `nextjs-fullstack` | `nextjs`, `prisma` |
+| `nextjs-cms-frontend` | `nextjs-cms-frontend`, `tailwind-v4`, `playwright-vitest` |
+| `payload-cms` | `payload` |
+| `python-fastapi` | `fastapi`, `sqlalchemy` plus local FastAPI helper skills when present |
+| `python-scraping` | `web-scraping`, `openai-extraction`, `background-tasks`, `websockets` |
+| `python-scripts` | `cli` |
+| `nestjs-backend` | `nestjs`, `typeorm` |
 
 ## Commands
 
-Custom slash commands available in all stacks:
+Common commands:
 
-- `/review-changes` - Review git changes before commit/PR
-- `/new-component` - Generate React component (react-tailwind)
+- `/review-changes` — review git changes before commit/PR.
+- `/new-component` — create a React component for React stacks.
+- `/new-block` — create/register a CMS block component in `nextjs-cms-frontend`.
 
 ## Usage Examples
 
-### React Project
-```
-"Here's the feature spec for user authentication, implement it"
-→ feature-developer creates components, hooks, types
+### React Vite Dashboard
 
-"Create a modal component with animations"
-→ component-builder creates polished UI
+```text
+"Add a task monitor page with polling and filters"
+→ tanstack-query-agent + feature-developer build query hooks, URL state, route, UI states, and tests.
 
-"Review the auth code before I commit"
-→ code-reviewer analyzes without modifying
-
-"Check for security issues"
-→ security-reviewer audits for vulnerabilities
+"Implement Okta protected admin routes"
+→ okta-auth-agent + react-router-agent wire callback, RequireAuth, role gates, and API headers.
 ```
 
-### Python API Project
-```
-"Add a new endpoint for user exports with background processing"
-→ feature-developer creates route, service, models
+### Next.js CMS Frontend
 
-"Write tests for the export functionality"
-→ test-writer creates pytest tests with fixtures
+```text
+"Add a hero block from Payload CMS"
+→ block-renderer-agent creates the component, transform, registry entry, fallback, and tests.
 
-"Optimize the database queries"
-→ performance-optimizer identifies N+1 and suggests fixes
+"Fix hreflang/canonical for Canada French pages"
+→ i18n-seo-agent audits route builders and metadata generation.
 ```
 
-### NestJS Backend Project
+### Payload CMS
+
+```text
+"Add a localized Blog collection with editor roles"
+→ content-modeler + access-control-reviewer define fields, access rules, migrations, and tests.
+
+"Review Local API calls before deploy"
+→ local-api-reviewer checks `overrideAccess` behavior, depth, pagination, and draft access.
 ```
-"Add a users module with CRUD and role-based access"
-→ feature-developer creates entity, DTOs, service, controller, module
 
-"Design the REST API for the orders feature"
-→ api-developer creates endpoints with guards, validation, Swagger docs
+### Python AI Scraping Pipeline
 
-"Review the auth module for vulnerabilities"
-→ security-reviewer audits JWT config, guards, and OWASP compliance
+```text
+"Add a background XLSX import task"
+→ xlsx-import-export-agent + task-manager-dev implement chunking, checkpoints, summaries, and tests.
 
-"Write tests for the orders service"
-→ test-writer creates Jest unit tests with mocked repos
+"Harden school website scraping"
+→ scraper-dev + ssrf-security-reviewer add URL validation, rate limits, fixtures, and security tests.
+```
+
+### NestJS Backend
+
+```text
+"Add a book export module"
+→ nestjs-module-generator + db-schema-designer + test-writer create module, DTOs, service, migrations, and tests.
+
+"Prepare backend for production deploy"
+→ config-validator + docker-setup review env validation, health checks, Dockerfile, CORS, and Swagger exposure.
 ```
 
 ## Customization
 
-### Adding Project-Specific Context
+After copying a stack:
 
-Edit `CLAUDE.md` in your project to add:
-- Project-specific patterns
-- Team conventions
-- Environment details
-- API documentation links
+1. Create/update the target project's own `CLAUDE.md` or `AGENTS.md` with project-specific architecture, commands, and constraints.
+2. Remove agents that do not apply to the project.
+3. Add domain-specific agents only when a pattern will repeat.
+4. Keep secrets out of `.claude/` files; use placeholders and `.env.example` docs.
 
-### Creating New Skills
+## Notes on Current Best Practices
 
-```markdown
-# .claude/skills/my-skill/SKILL.md
----
-name: my-skill
-description: What it does and when to trigger it
----
-
-# Skill content here
-```
-
-### Creating New Agents
-
-```markdown
-# .claude/agents/my-agent.md
----
-name: my-agent
-description: When to use this agent
-tools: Read, Write, Edit, Bash
-model: sonnet
----
-
-# Agent instructions here
-```
+- Tailwind CSS v4 prefers CSS-first configuration with `@theme`; Vite projects should use `@tailwindcss/vite`.
+- TanStack Query v5 should use query-key factories, precise invalidation, explicit pending/error/empty states, and controlled polling.
+- React Router v7 supports declarative/data/framework modes; dashboards should use nested layouts, lazy route loading, protected routes, and URL search params for shareable state.
+- Payload Local API calls that pass a `user` must set `overrideAccess: false` when access control should be enforced.
+- Next.js CMS frontends should default to Server Components and centralize CMS fetching, cache tags, and SEO helpers.
+- Scraping/data-pipeline APIs must treat URLs, uploaded files, scraped HTML, and AI inputs as untrusted.
 
 ## License
 
